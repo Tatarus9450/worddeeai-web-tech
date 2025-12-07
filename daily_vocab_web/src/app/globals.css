@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'FolioStd';
+  src: url('/fonts/FolioStd-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  src: url('/fonts/Merriweather-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+:root {
+  --color-background: #8da399;
+  --color-primary: #1f4b43;
+  --color-accent: #f3e8b0;
+  --color-text-main: #1f4b43;
+  --font-folio: 'FolioStd', sans-serif;
+  --font-merriweather: 'Merriweather', serif;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+}
