@@ -7,7 +7,7 @@
 ### 1. Start Backend (API & Database)
 ```bash
 cd daily_vocab_api
-docker-compose up --build -d
+docker compose up -d
 cd ..
 ```
 > รอสักครู่ให้ Database เริ่มทำงาน (API จะอยู่ที่ Port `8000`, MySQL Port `3307`)

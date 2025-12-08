@@ -1,25 +1,39 @@
+"use client";
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
+    const pathname = usePathname();
+
     return (
         <header className="bg-white py-4 shadow-sm">
             <div className="container mx-auto flex max-w-5xl items-center justify-between px-4">
-                <Link href="/" className="text-3xl font-folio text-gray-900">
+                <Link href="/" className="text-3xl font-folio text-primary hover:text-primary/90">
                     worddee.ai
                 </Link>
 
                 <nav className="hidden space-x-8 md:flex">
-                    <Link href="/dashboard" className="text-xl font-medium text-blue-400 hover:text-blue-600">
+                    <Link
+                        href="/dashboard"
+                        className={`text-base font-medium transition-colors ${pathname === '/dashboard' ? 'text-primary font-bold decoration-2 underline-offset-4 underline decoration-primary' : 'text-blue-400 hover:text-blue-600'
+                            }`}
+                    >
                         My Progress
                     </Link>
-                    <Link href="/" className="text-xl font-medium text-blue-400 hover:text-blue-600">
+                    <Link
+                        href="/"
+                        className={`text-base font-medium transition-colors ${pathname === '/' ? 'text-primary font-bold decoration-2 underline-offset-4 underline decoration-primary' : 'text-blue-400 hover:text-blue-600'
+                            }`}
+                    >
                         Word of the Day
                     </Link>
                 </nav>
 
                 <div className="flex items-center space-x-4">
                     <button className="rounded-full bg-transparent p-1 text-primary hover:bg-gray-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-8 w-8 text-blue-500">
+                        {/* User Icon from Heroicons or similar SVG */}
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-8 w-8 text-cyan-500">
                             <path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" />
                         </svg>
                     </button>
