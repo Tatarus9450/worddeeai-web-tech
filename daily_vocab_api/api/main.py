@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.database import Base, engine
-from app.routers import words, practice
+from app.routers import words, practice, stats
 
 # Ensure database tables exist on startup
 Base.metadata.create_all(bind=engine)
@@ -32,6 +32,11 @@ app.include_router(
     practice.router,
     prefix="/api",
     tags=["practice"]
+)
+app.include_router(
+    stats.router,
+    prefix="/api",
+    tags=["stats"]
 )
 
 @app.get("/")

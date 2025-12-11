@@ -256,7 +256,7 @@ export default function Home() {
 
                         {/* Part of speech and pronunciation */}
                         <div className="text-[18px] leading-[21px] text-primary font-roboto font-light italic">
-                            Noun [{currentWord.word.toLowerCase().split('').join('-')}]
+                            Noun [{currentWord.word?.toLowerCase().split('').join('-') || ''}]
                         </div>
 
                         {/* Meaning */}
@@ -266,7 +266,7 @@ export default function Home() {
                         </div>
 
                         {/* Example sentence */}
-                        <p className="text-[18px] leading-[21px] text-primary font-roboto font-light">"The jet braked hard as its wheels touched the <span className="underline">{currentWord.word.toLowerCase()}</span>."</p>
+                        <p className="text-[18px] leading-[21px] text-primary font-roboto font-light">"The jet braked hard as its wheels touched the <span className="underline">{currentWord.word?.toLowerCase() || '...'}</span>."</p>
                     </div>
                 </div>
 
