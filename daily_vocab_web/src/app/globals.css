@@ -2,10 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+
 @font-face {
   font-family: 'FolioStd';
-  src: url('/fonts/FolioStd-Bold.ttf') format('truetype');
-  font-weight: bold;
+  src: url('/fonts/Folio-Std-Medium.ttf') format('truetype');
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -17,15 +19,18 @@
 }
 
 :root {
-  --color-background: #ffffff;
-  --color-primary: #1f4b43;
-  --color-accent: #f3e8b0;
-  --color-text-main: #1f4b43;
+  --color-background: #25444180;
+  --color-primary: #254441;
+  --color-accent: #FFEFB8;
+  --color-text-main: #254441;
+  --color-nav: #007AAE;
+  --color-border: #D4D4D4;
   --font-folio: 'FolioStd', sans-serif;
   --font-merriweather: 'Merriweather', serif;
+  --font-roboto: 'Roboto', sans-serif;
 }
 
 body {
-  background-color: var(--color-background);
+  background-color: #FFFFFF;
   color: var(--color-text-main);
 }

@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${inter.variable} ${playfair.variable} font-sans min-h-screen`}>
         <Header />
-        <main className="py-8">
+        <main>
           {children}
         </main>
       </body>
