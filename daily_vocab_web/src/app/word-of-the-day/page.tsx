@@ -97,11 +97,11 @@ export default function Home() {
     // Loading Skeleton UI
     if (!currentWord) {
         return (
-            <div className="flex min-h-[80vh] items-center justify-center px-4 py-8">
+            <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
                 <div
                     className="w-full max-w-[1000px] rounded-[20px] bg-white p-10 shadow-2xl md:p-12"
                     style={{
-                        transform: 'scale(0.8)',
+                        transform: 'scale(0.9)',
                         transformOrigin: 'top center'
                     }}
                 >
@@ -141,11 +141,11 @@ export default function Home() {
     // Success Screen - After Submit
     if (isSubmitted) {
         return (
-            <div className="flex min-h-[80vh] items-center justify-center px-4 py-8">
+            <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
                 <div
                     className="w-full max-w-[1000px] rounded-[20px] bg-white p-10 shadow-2xl md:p-12 flex flex-col items-center gap-8"
                     style={{
-                        transform: 'scale(0.8)',
+                        transform: 'scale(0.9)',
                         transformOrigin: 'top center'
                     }}
                 >
@@ -210,11 +210,11 @@ export default function Home() {
     }
 
     return (
-        <div className="flex min-h-[80vh] items-center justify-center px-4 py-8">
+        <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
             <div
                 className="w-full max-w-[1000px] rounded-[20px] bg-white p-10 shadow-2xl md:p-12"
                 style={{
-                    transform: 'scale(0.8)',
+                    transform: 'scale(0.9)',
                     transformOrigin: 'top center'
                 }}
             >

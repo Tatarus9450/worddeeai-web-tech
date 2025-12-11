@@ -16,7 +16,13 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-white">
       {/* Body Content */}
-      <div className="max-w-[1048px] mx-auto px-4 py-8 flex flex-col gap-8">
+      <div
+        className="max-w-[1048px] mx-auto px-4 py-8 flex flex-col gap-8"
+        style={{
+          transform: 'scale(0.8)',
+          transformOrigin: 'top center'
+        }}
+      >
         {/* Page Header */}
         <h1 className="text-[40px] leading-[50px] font-bold text-primary font-merriweather">
           My Progress

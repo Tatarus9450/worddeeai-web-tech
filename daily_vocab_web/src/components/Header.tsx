@@ -7,7 +7,7 @@ export default function Header() {
     const pathname = usePathname();
 
     return (
-        <header className="bg-white h-[63px] flex items-center">
+        <header className="bg-white h-[63px] flex items-center sticky top-0 z-50">
             <div className="w-full max-w-[1440px] mx-auto px-[22px] flex items-center justify-between">
                 {/* Left section: Logo + Nav */}
                 <div className="flex items-center gap-[200px]">
