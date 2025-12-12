@@ -4,18 +4,18 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import Word, PracticeSession
 from app.schemas import ValidateSentenceRequest, ValidateSentenceResponse
-from app.utils import mock_ai_validation
+from app.utils import ai_validation
 
 router = APIRouter()
 
 
 @router.post("/validate-sentence", response_model=ValidateSentenceResponse)
-def validate_sentence(
+async def validate_sentence(
     request: ValidateSentenceRequest,
     db: Session = Depends(get_db)
 ):
     """
-    Receive user sentence and validate it (mock AI)
+    Receive user sentence and validate it using AI via n8n
     Save results to database
     """
     # Get word data
@@ -23,8 +23,8 @@ def validate_sentence(
     if not word:
         raise HTTPException(status_code=404, detail="Word not found")
     
-    # Mock AI validation
-    result = mock_ai_validation(request.sentence, word.word, word.difficulty_level)
+    # AI validation via n8n (falls back to rule-based if n8n unavailable)
+    result = await ai_validation(request.sentence, word.word, word.difficulty_level)
     
     # Save to database
     practice_session = PracticeSession(

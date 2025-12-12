@@ -42,7 +42,7 @@ export default function Home() {
         } catch (err) {
             console.error('Error fetching word:', err);
             setCurrentWord(null);
-            setError('ไม่สามารถดึงคำศัพท์ได้ กรุณาลองใหม่');
+            setError('System can\'t fetch word - Please try again');
         }
     }, []);
 
@@ -138,6 +138,40 @@ export default function Home() {
         );
     }
 
+    // Submitting Loading Screen - While waiting for API
+    if (isSubmitting) {
+        return (
+            <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
+                <div
+                    className="w-full max-w-[1000px] rounded-[20px] bg-white p-10 shadow-2xl md:p-12"
+                    style={{
+                        transform: 'scale(0.9)',
+                        transformOrigin: 'top center'
+                    }}
+                >
+                    {/* Skeleton Header */}
+                    <div className="flex flex-col items-center gap-2 mb-9">
+                        <div className="w-full h-[54px] bg-[#F6F6F6] rounded animate-pulse"></div>
+                        <div className="w-[100px] h-[100px] bg-[#F6F6F6] rounded-full animate-pulse"></div>
+                        <div className="w-[468px] h-[21px] bg-[#F6F6F6] rounded animate-pulse"></div>
+                    </div>
+
+                    {/* Skeleton Dialog boxes */}
+                    <div className="flex flex-col gap-4 mb-9">
+                        <div className="w-full h-[56px] bg-[#F6F6F6] rounded-[10px] animate-pulse"></div>
+                        <div className="w-full h-[118px] bg-[#F6F6F6] rounded-[10px] animate-pulse"></div>
+                    </div>
+
+                    {/* Skeleton Buttons */}
+                    <div className="flex items-center justify-between">
+                        <div className="w-[183px] h-[72px] bg-[#F6F6F6] rounded-[40px] animate-pulse"></div>
+                        <div className="w-[154px] h-[72px] bg-[#F6F6F6] rounded-[40px] animate-pulse"></div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     // Success Screen - After Submit
     if (isSubmitted) {
         return (
@@ -157,7 +191,7 @@ export default function Home() {
                         {/* Tags */}
                         <div className="flex gap-4">
                             <div className="rounded-[20px] bg-accent px-4 py-2.5 text-[18px] leading-[23px] font-bold text-[#474747] font-merriweather">
-                                Level Beginner
+                                Level {currentWord?.difficulty_level || 'Beginner'}
                             </div>
                             <div className="rounded-[20px] bg-[#F3EDF7] px-4 py-2.5 text-[18px] leading-[23px] font-bold text-[#474747] font-merriweather">
                                 Score {score.toFixed(1)}
@@ -178,10 +212,10 @@ export default function Home() {
                         {/* Suggestion box */}
                         <div className="w-full rounded-[10px] bg-[#E7FFDE] shadow-[0px_1px_9.1px_-3px_rgba(0,0,0,0.16)] p-4 flex flex-col gap-2 border-l-4 border-[#B2E362]">
                             <p className="text-[16px] leading-[19px] font-bold text-primary font-roboto">
-                                Suggestion:
+                                คำแนะนำจาก AI:
                             </p>
                             <p className="text-[16px] leading-[19px] font-light italic text-primary font-roboto">
-                                {feedbackMessage || "Great job! Your sentence demonstrates good understanding of the word."}
+                                {feedbackMessage || "ยอดเยี่ยม! ประโยคของคุณแสดงความเข้าใจคำศัพท์ได้ดีมาก"}
                             </p>
                         </div>
                     </div>
@@ -266,7 +300,7 @@ export default function Home() {
                         </div>
 
                         {/* Example sentence */}
-                        <p className="text-[18px] leading-[21px] text-primary font-roboto font-light">"The jet braked hard as its wheels touched the <span className="underline">{currentWord.word?.toLowerCase() || '...'}</span>."</p>
+                        <p className="text-[18px] leading-[21px] text-primary font-roboto font-light">"This word "<span className="underline">{currentWord.word?.toLowerCase() || '...'}</span>" is English Language"</p>
                     </div>
                 </div>
 
