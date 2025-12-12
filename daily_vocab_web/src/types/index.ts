@@ -5,4 +5,7 @@ export type Word = {
     word: string;
     definition: string;
     difficulty_level: Difficulty;
+    part_of_speech?: string;
+    pronunciation?: string;
+    example_sentence?: string;
 };

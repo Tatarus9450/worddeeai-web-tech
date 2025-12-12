@@ -8,6 +8,9 @@ class WordResponse(BaseModel):
     word: str
     definition: str
     difficulty_level: str
+    part_of_speech: str | None = None
+    pronunciation: str | None = None
+    example_sentence: str | None = None
     
     class Config:
         from_attributes = True

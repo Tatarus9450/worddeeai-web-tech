@@ -1,47 +1,129 @@
-# Daily Vocab Project
+# worddee.ai - Daily Vocab Project
 
-## 🚀 Quick Start (วิธีรันโปรเจกต์)
+## 🚀 Quick Start
 
-ก๊อปปี้คำสั่งด้านล่างไปวางใน Terminal เพื่อเริ่มใช้งานได้ทันที:
-
-### 1. Start Backend (API & Database)
+### 1. Start Backend (API, Database & n8n)
 ```bash
 cd daily_vocab_api
 docker compose up -d
 cd ..
 ```
-> รอสักครู่ให้ Database เริ่มทำงาน (API จะอยู่ที่ Port `8000`, MySQL Port `3307`)
+> Services: API (`8000`), MySQL (`3307`), n8n (`5678`)
 
-### 2. Start Frontend (Web App)
+### 2. Start Frontend
 ```bash
 cd daily_vocab_web
 npm install
 npm run dev
 ```
-> เปิดเว็บได้ที่: [http://localhost:3000](http://localhost:3000)
+> เปิดเว็บ: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## 📋 รายละเอียดโปรเจกต์
+## 🔗 Services
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Frontend** | http://localhost:3000 | Next.js Web App |
+| **Backend API** | http://localhost:8000 | FastAPI |
+| **API Docs** | http://localhost:8000/docs | Swagger UI |
+| **n8n** | http://localhost:5678 | AI Workflow Automation |
+| **MySQL** | localhost:3307 | Database |
+
+---
+
+## 🗄️ Database Connection
+
+### Connection Details
+| Parameter | Value |
+|-----------|-------|
+| **Host** | `localhost` |
+| **Port** | `3307` |
+| **Database** | `vocabulary_db` |
+| **Username** | `vocabuser` |
+| **Password** | `vocabpass123` |
+
+### Connection String
+```
+mysql://vocabuser:vocabpass123@localhost:3307/vocabulary_db
+```
+
+### Connect via MySQL CLI
+```bash
+mysql -h 127.0.0.1 -P 3307 -u vocabuser -pvocabpass123 vocabulary_db
+```
+
+### Connect via DBeaver / DataGrip / MySQL Workbench
+- Host: `localhost` หรือ `127.0.0.1`
+- Port: `3307`
+- Database: `vocabulary_db`
+- User: `vocabuser`
+- Password: `vocabpass123`
+
+---
+
+## 🏗️ Tech Stack
 
 ### Backend (`daily_vocab_api`)
-- **Technology**: Python (FastAPI), MySQL, Docker
-- **API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
-- **Database**: MySQL (Host Port: 3307, Container Port: 3306)
+- **Framework**: Python (FastAPI)
+- **Database**: MySQL 8.0
+- **AI Integration**: n8n + Google Gemini API
+- **Container**: Docker Compose
 
 ### Frontend (`daily_vocab_web`)
-- **Technology**: Next.js, TypeScript, Tailwind CSS
-- **URL**: [http://localhost:3000](http://localhost:3000)
-- **Features**:
-  - Custom Fonts: `Folio Std` (Logo), `Merriweather` (Content)
-  - Responsive Design
-  - Word of the Day Challenge
+- **Framework**: Next.js 14, TypeScript
+- **Styling**: Tailwind CSS
+- **Fonts**: Folio Std (Logo), Merriweather (Content)
+- **Image API**: Pexels API
 
-## 🛑 วิธีหยุดการทำงาน
+---
+
+## ✨ Features
+
+- 🎯 **Word of the Day** - ฝึกเขียนประโยคจากคำศัพท์ (150 คำ พร้อม pronunciation & example)
+- 🤖 **AI Scoring** - ให้คะแนนและคำแนะนำจาก Gemini AI เป็นภาษาไทย
+- 📊 **Dashboard** - ติดตามความก้าวหน้า (Day Streak, Time Learned)
+- 🖼️ **Dynamic Images** - รูปภาพเปลี่ยนตามคำศัพท์จาก Pexels
+- 📱 **Responsive UI** - รองรับทุกหน้าจอ
+
+---
+
+## 🛑 Stop Services
+
 ```bash
-# หยุด Backend
-cd daily_vocab_api && docker-compose down
+# Stop Backend
+cd daily_vocab_api && docker compose down
 
-# หยุด Frontend
-# กด Ctrl + C ใน Terminal
+# Stop Frontend
+# Press Ctrl + C in Terminal
+```
+
+---
+
+## 📋 n8n Setup (First Time Only)
+
+1. เปิด http://localhost:5678
+2. สร้าง account
+3. เพิ่ม Google Gemini Credentials (API Key)
+4. Import workflow จากไฟล์ `n8n-workflow.json`
+5. Activate workflow
+
+---
+
+## 📁 Project Structure
+
+```
+web-tech/
+├── daily_vocab_api/          # Backend
+│   ├── api/                  # FastAPI Application
+│   ├── docker-compose.yml    # Docker Services
+│   ├── init.sql              # Database Schema + 150 Words
+│   └── n8n-workflow.json     # n8n Workflow Template
+│
+└── daily_vocab_web/          # Frontend
+    └── src/
+        ├── app/              # Next.js Pages
+        │   ├── word-of-the-day/
+        │   └── dashboard/
+        └── components/       # React Components
 ```

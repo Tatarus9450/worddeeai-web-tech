@@ -33,6 +33,7 @@ export default function Dashboard() {
   });
   const [history, setHistory] = useState<PracticeHistory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [popup, setPopup] = useState<{ title: string; content: string } | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,12 +86,12 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="h-screen overflow-hidden bg-white">
       {/* Body Content */}
       <div
-        className="max-w-[1048px] mx-auto px-4 py-8 flex flex-col gap-8"
+        className="max-w-[1048px] mx-auto px-4 py-8 flex flex-col gap-8 h-full overflow-hidden"
         style={{
-          transform: 'scale(0.8)',
+          transform: 'scale(0.9)',
           transformOrigin: 'top center'
         }}
       >
@@ -223,12 +224,20 @@ export default function Dashboard() {
                         </span>
                       </td>
                       <td className="px-4 py-4 max-w-[200px]">
-                        <p className="text-[14px] text-primary/80 font-roboto truncate" title={item.user_sentence}>
+                        <p
+                          className="text-[14px] text-primary/80 font-roboto truncate cursor-pointer hover:text-primary hover:underline"
+                          title="Click to view full text"
+                          onClick={() => setPopup({ title: 'Your Sentence', content: item.user_sentence })}
+                        >
                           {item.user_sentence}
                         </p>
                       </td>
                       <td className="px-4 py-4 max-w-[200px]">
-                        <p className="text-[14px] text-primary/70 font-roboto italic truncate" title={item.feedback}>
+                        <p
+                          className="text-[14px] text-primary/70 font-roboto italic truncate cursor-pointer hover:text-primary hover:underline"
+                          title="Click to view full text"
+                          onClick={() => setPopup({ title: 'Suggestion', content: item.feedback })}
+                        >
                           {item.feedback}
                         </p>
                       </td>
@@ -255,6 +264,36 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      {/* Popup Modal */}
+      {popup && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={() => setPopup(null)}>
+          <div
+            className="bg-white rounded-[25px] p-8 max-w-[625px] w-[90%] max-h-[80vh] overflow-y-auto relative shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition"
+              onClick={() => setPopup(null)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-6 h-6 text-gray-600">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Title */}
+            <h3 className="text-[36px] font-bold text-primary font-merriweather mb-5 pr-12">
+              {popup.title}
+            </h3>
+
+            {/* Content */}
+            <p className="text-[24px] text-primary/80 font-roboto leading-relaxed">
+              {popup.content}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

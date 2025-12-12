@@ -62,33 +62,33 @@ def fallback_validation(sentence: str, target_word: str, difficulty: str) -> dic
     if difficulty == 'Beginner':
         if word_count < 4:
             score = random.uniform(5.0, 6.5)
-            suggestion = "ประโยคสั้นไปหน่อย ลองเพิ่มรายละเอียดอีกนิดนะ"
+            suggestion = "ประโยคสั้นไปหน่อย ลองเพิ่มรายละเอียดอีกนิดนะ(ให้คำตอบโดยระบบ Mock AI)"
         elif word_count < 8:
             score = random.uniform(7.0, 8.5)
-            suggestion = "ดีมาก! ประโยคของคุณเข้าใจง่ายและถูกต้อง"
+            suggestion = "ดีมาก! ประโยคของคุณเข้าใจง่ายและถูกต้อง(ให้คำตอบโดยระบบ Mock AI)"
         else:
             score = random.uniform(8.5, 10.0)
-            suggestion = "ยอดเยี่ยมมาก! ประโยคสมบูรณ์และใช้คำศัพท์ได้อย่างเหมาะสม"
+            suggestion = "ยอดเยี่ยมมาก! ประโยคสมบูรณ์และใช้คำศัพท์ได้อย่างเหมาะสม(ให้คำตอบโดยระบบ Mock AI)"
     elif difficulty == 'Intermediate':
         if word_count < 6:
             score = random.uniform(4.0, 5.5)
-            suggestion = "สำหรับคำศัพท์ระดับกลาง ควรเขียนประโยคที่ซับซ้อนกว่านี้"
+            suggestion = "สำหรับคำศัพท์ระดับกลาง ควรเขียนประโยคที่ซับซ้อนกว่านี้(ให้คำตอบโดยระบบ Mock AI)"
         elif word_count < 10:
             score = random.uniform(6.5, 8.0)
-            suggestion = "ดี! แต่ลองใช้โครงสร้างประโยคที่หลากหลายมากขึ้น"
+            suggestion = "ดี! แต่ลองใช้โครงสร้างประโยคที่หลากหลายมากขึ้น(ให้คำตอบโดยระบบ Mock AI)"
         else:
             score = random.uniform(8.0, 9.5)
-            suggestion = "เยี่ยมมาก! คุณใช้คำศัพท์ได้อย่างเชี่ยวชาญ"
+            suggestion = "เยี่ยมมาก! คุณใช้คำศัพท์ได้อย่างเชี่ยวชาญ(ให้คำตอบโดยระบบ Mock AI)"
     else:  # Advanced
         if word_count < 8:
             score = random.uniform(3.0, 5.0)
-            suggestion = "คำศัพท์ระดับสูงต้องการบริบทที่ซับซ้อนมากกว่านี้"
+            suggestion = "คำศัพท์ระดับสูงต้องการบริบทที่ซับซ้อนมากกว่านี้(ให้คำตอบโดยระบบ Mock AI)"
         elif word_count < 12:
             score = random.uniform(5.5, 7.5)
-            suggestion = "พอใช้ได้ แต่ลองแสดงความเข้าใจในความหมายลึกซึ้งของคำมากขึ้น"
+            suggestion = "พอใช้ได้ แต่ลองแสดงความเข้าใจในความหมายลึกซึ้งของคำมากขึ้น(ให้คำตอบโดยระบบ Mock AI)"
         else:
             score = random.uniform(7.5, 9.0)
-            suggestion = "ประทับใจมาก! คุณเข้าใจและใช้คำศัพท์ขั้นสูงได้อย่างถูกต้อง"
+            suggestion = "ประทับใจมาก! คุณเข้าใจและใช้คำศัพท์ขั้นสูงได้อย่างถูกต้อง(ให้คำตอบโดยระบบ Mock AI)"
     
     return {
         "score": round(score, 1),

@@ -1,152 +1,155 @@
 {
-    "name": "Vocab AI Scoring",
-    "nodes": [
-        {
-            "parameters": {
-                "path": "vocab-scoring",
-                "httpMethod": "POST",
-                "responseMode": "responseNode",
-                "options": {}
-            },
-            "id": "webhook",
-            "name": "Webhook",
-            "type": "n8n-nodes-base.webhook",
-            "typeVersion": 2,
-            "position": [
-                250,
-                300
-            ],
-            "webhookId": "vocab-scoring"
-        },
-        {
-            "parameters": {
-                "model": "gpt-4o-mini",
-                "messages": {
-                    "values": [
-                        {
-                            "content": "คุณเป็นครูสอนภาษาอังกฤษที่เชี่ยวชาญ ให้คะแนนประโยคและวิจารณ์เป็นภาษาไทยอย่างตรงไปตรงมา\n\nกฎการให้คะแนน (1-10):\n- Beginner: ประโยคสั้นๆ ถูกต้องตามหลักภาษา = 7-10, ใช้คำผิดบริบท = 4-6, ไม่มีคำศัพท์เป้าหมาย = 0-3\n- Intermediate: ต้องมีโครงสร้างประโยคที่ดีและใช้คำได้เหมาะสม เพื่อได้ 7-10\n- Advanced: ต้องใช้คำในบริบทที่ซับซ้อนและแสดงความเข้าใจลึกซึ้ง เพื่อได้ 7-10\n\nวิจารณ์อย่างตรงไปตรงมา ชี้ให้เห็นจุดที่ดีและจุดที่ต้องปรับปรุง\nถ้าประโยคผิดหลักภาษาให้แก้ไขให้ถูกต้องใน corrected_sentence\n\nตอบเป็น JSON เท่านั้น ห้ามใส่ข้อความอื่น"
-                        }
-                    ]
-                },
-                "options": {
-                    "temperature": 0.7,
-                    "maxTokens": 500
-                }
-            },
-            "id": "openai",
-            "name": "OpenAI Chat",
-            "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-            "typeVersion": 1,
-            "position": [
-                500,
-                300
-            ],
-            "credentials": {
-                "openAiApi": {
-                    "id": "1",
-                    "name": "OpenAI API"
-                }
-            }
-        },
-        {
-            "parameters": {
-                "promptType": "define",
-                "text": "=คำศัพท์: {{ $('Webhook').item.json.word }}\nระดับ: {{ $('Webhook').item.json.difficulty }}\nประโยคที่ผู้ใช้เขียน: {{ $('Webhook').item.json.sentence }}\n\nให้คะแนนและวิจารณ์ประโยคนี้ ตอบเป็น JSON format เท่านั้น:\n{\"score\": <1-10>, \"level\": \"{{ $('Webhook').item.json.difficulty }}\", \"suggestion\": \"<คำวิจารณ์ภาษาไทย>\", \"corrected_sentence\": \"<ประโยคที่แก้ไข หรือประโยคเดิมถ้าถูกต้อง>\"}"
-            },
-            "id": "agent",
-            "name": "AI Agent",
-            "type": "@n8n/n8n-nodes-langchain.agent",
-            "typeVersion": 1.7,
-            "position": [
-                700,
-                300
-            ]
-        },
-        {
-            "parameters": {
-                "jsCode": "const aiResponse = $input.first().json.output || $input.first().json.text || '';\n\ntry {\n  const jsonMatch = aiResponse.match(/\\{[\\s\\S]*\\}/);\n  if (jsonMatch) {\n    const parsed = JSON.parse(jsonMatch[0]);\n    return [{\n      json: {\n        score: Number(parsed.score) || 5,\n        level: parsed.level || 'Beginner',\n        suggestion: parsed.suggestion || 'ไม่สามารถวิเคราะห์ได้',\n        corrected_sentence: parsed.corrected_sentence || ''\n      }\n    }];\n  }\n} catch (e) {\n  console.log('Parse error:', e);\n}\n\nreturn [{\n  json: {\n    score: 5,\n    level: 'Beginner',\n    suggestion: 'ขออภัย ไม่สามารถวิเคราะห์ได้ในขณะนี้',\n    corrected_sentence: ''\n  }\n}];"
-            },
-            "id": "parse",
-            "name": "Parse JSON",
-            "type": "n8n-nodes-base.code",
-            "typeVersion": 2,
-            "position": [
-                900,
-                300
-            ]
-        },
-        {
-            "parameters": {
-                "respondWith": "json",
-                "responseBody": "={{ $json }}",
-                "options": {
-                    "responseHeaders": {
-                        "entries": [
-                            {
-                                "name": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ]
-                    }
-                }
-            },
-            "id": "respond",
-            "name": "Respond to Webhook",
-            "type": "n8n-nodes-base.respondToWebhook",
-            "typeVersion": 1.1,
-            "position": [
-                1100,
-                300
-            ]
-        }
-    ],
-    "connections": {
-        "Webhook": {
-            "main": [
-                [
-                    {
-                        "node": "AI Agent",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "OpenAI Chat": {
-            "ai_languageModel": [
-                [
-                    {
-                        "node": "AI Agent",
-                        "type": "ai_languageModel",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "AI Agent": {
-            "main": [
-                [
-                    {
-                        "node": "Parse JSON",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        },
-        "Parse JSON": {
-            "main": [
-                [
-                    {
-                        "node": "Respond to Webhook",
-                        "type": "main",
-                        "index": 0
-                    }
-                ]
-            ]
-        }
+  "name": "Vocab AI Scoring",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vocab-scoring",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a449a910-aefb-47fd-9270-a918d8a8a6d2",
+      "name": "Webhook",
+      "webhookId": "28bbe19e-1628-4c3c-99ff-13c90072ef1f"
     },
-    "settings": {
-        "executionOrder": "v1"
+    {
+      "parameters": {
+        "jsCode": "// Get Gemini response from the correct path\nconst geminiOutput = $input.first().json;\nconst aiResponse = geminiOutput.content?.parts?.[0]?.text || '';\n\ntry {\n  // Extract JSON from markdown code block\n  const jsonMatch = aiResponse.match(/```json\\s*([\\s\\S]*?)\\s*```/) || aiResponse.match(/\\{[\\s\\S]*\\}/);\n  \n  let jsonStr = '';\n  if (jsonMatch) {\n    jsonStr = jsonMatch[1] || jsonMatch[0];\n  }\n  \n  if (jsonStr) {\n    const parsed = JSON.parse(jsonStr);\n    return [{\n      json: {\n        score: Number(parsed.score) || 5,\n        level: parsed.level || 'Beginner',\n        suggestion: parsed.suggestion || 'ไม่สามารถวิเคราะห์ได้',\n        corrected_sentence: parsed.corrected_sentence || ''\n      }\n    }];\n  }\n} catch (e) {\n  console.log('Parse error:', e.message);\n}\n\n// Fallback\nreturn [{\n  json: {\n    score: 5,\n    level: 'Beginner',\n    suggestion: 'ขออภัย ไม่สามารถวิเคราะห์ได้ในขณะนี้',\n    corrected_sentence: ''\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        0
+      ],
+      "id": "d49398e9-bd32-43e3-8a9d-b7237276d994",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        848,
+        0
+      ],
+      "id": "01aad4e1-ebff-4d95-9a91-2e3bd41cfe15",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=คุณเป็นครูสอนภาษาอังกฤษ ให้คะแนน 1-10 และวิจารณ์เป็นภาษาไทยอย่างตรงไปตรงมา\n\nกฎการให้คะแนน:\n- Beginner: ประโยคสั้นๆ ถูกต้อง = 7-10, ใช้คำผิด = 4-6, ไม่มีคำศัพท์ = 0-3\n- Intermediate: ต้องมีโครงสร้างที่ดี เพื่อได้ 7-10\n- Advanced: ต้องใช้คำในบริบทซับซ้อน เพื่อได้ 7-10\n\nคำศัพท์: {{ $json.body.word }}\nระดับ: {{ $json.body.difficulty }}\nประโยคที่ผู้ใช้เขียน: {{ $json.body.sentence }}\n\nให้คะแนนและวิจารณ์ประโยคนี้ ตอบเป็น JSON เท่านั้น:\n{\"score\": <1-10>, \"level\": \"{{ $json.body.difficulty }}\", \"suggestion\": \"<คำวิจารณ์ภาษาไทย>\", \"corrected_sentence\": \"<ประโยคที่แก้ไข>\"}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "5f33fb60-cd26-4e4e-b767-d79439dce413",
+      "name": "Message a model1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "3lkJTUN8a2HB759K",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
     }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "localhost:5678",
+            "user-agent": "curl/7.81.0",
+            "accept": "*/*",
+            "content-type": "application/json",
+            "content-length": "76"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "sentence": "I love learning English",
+            "word": "love",
+            "difficulty": "Beginner"
+          },
+          "webhookUrl": "http://localhost:5678/webhook/vocab-scoring",
+          "executionMode": "production"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Message a model1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "df7d5a3b-6f69-4a60-bff1-aa94a153833c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "19b02d52af9f4770062dc9b16ece00b07c5389364ad850af42ecd73c2c79d34f"
+  },
+  "id": "aqJlGEZm7ytLOjRT",
+  "tags": []
 }

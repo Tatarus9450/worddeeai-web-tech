@@ -13,6 +13,7 @@ export default function Home() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [wordImage, setWordImage] = useState<string>('');
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
@@ -49,6 +50,20 @@ export default function Home() {
     useEffect(() => {
         getRandomWord();
     }, [getRandomWord]);
+
+    // Fetch word image from Pexels
+    useEffect(() => {
+        if (currentWord?.word) {
+            fetch(`/api/word-image?query=${encodeURIComponent(currentWord.word)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.url) {
+                        setWordImage(data.url);
+                    }
+                })
+                .catch(err => console.error('Error fetching word image:', err));
+        }
+    }, [currentWord?.word]);
 
     const handleSentenceChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setSentence(e.target.value);
@@ -91,13 +106,14 @@ export default function Home() {
 
     const handleNextWord = () => {
         setError(null);
+        setWordImage(''); // Reset image immediately for faster UX
         getRandomWord();
     };
 
     // Loading Skeleton UI
     if (!currentWord) {
         return (
-            <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
+            <div className="h-screen overflow-hidden flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
                 <div
                     className="w-full max-w-[1000px] rounded-[20px] bg-white p-10 shadow-2xl md:p-12"
                     style={{
@@ -141,7 +157,7 @@ export default function Home() {
     // Submitting Loading Screen - While waiting for API
     if (isSubmitting) {
         return (
-            <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
+            <div className="h-screen overflow-hidden flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
                 <div
                     className="w-full max-w-[1000px] rounded-[20px] bg-white p-10 shadow-2xl md:p-12"
                     style={{
@@ -175,7 +191,7 @@ export default function Home() {
     // Success Screen - After Submit
     if (isSubmitted) {
         return (
-            <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
+            <div className="h-screen overflow-hidden flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
                 <div
                     className="w-full max-w-[1000px] rounded-[20px] bg-white p-10 shadow-2xl md:p-12 flex flex-col items-center gap-8"
                     style={{
@@ -244,7 +260,7 @@ export default function Home() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
+        <div className="h-screen overflow-hidden flex items-center justify-center px-4 py-8" style={{ backgroundColor: '#25444180' }}>
             <div
                 className="w-full max-w-[1000px] rounded-[20px] bg-white p-10 shadow-2xl md:p-12"
                 style={{
@@ -263,11 +279,15 @@ export default function Home() {
                     {/* Left: Image - 240x240px */}
                     <div className="flex-shrink-0">
                         <div className="w-60 h-60 overflow-hidden rounded-[16.87px] bg-gray-200">
-                            <img
-                                src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=400&auto=format&fit=crop"
-                                alt="Word context"
-                                className="h-full w-full object-cover"
-                            />
+                            {wordImage ? (
+                                <img
+                                    src={wordImage}
+                                    alt={currentWord?.word || 'Word context'}
+                                    className="h-full w-full object-cover"
+                                />
+                            ) : (
+                                <div className="h-full w-full bg-[#F6F6F6] animate-pulse"></div>
+                            )}
                         </div>
                     </div>
 
@@ -275,7 +295,7 @@ export default function Home() {
                     <div className="flex-1 relative rounded-[20px] border border-border p-4 gap-4 flex flex-col">
                         {/* Level badge */}
                         <div className="absolute -top-[26px] right-4 rounded-[20px] bg-accent px-4 py-2.5 text-[18px] leading-[23px] font-bold text-[#474747] font-merriweather">
-                            Level Beginner
+                            Level {currentWord?.difficulty_level || 'Beginner'}
                         </div>
 
                         {/* Word with play icon */}
@@ -290,7 +310,7 @@ export default function Home() {
 
                         {/* Part of speech and pronunciation */}
                         <div className="text-[18px] leading-[21px] text-primary font-roboto font-light italic">
-                            Noun [{currentWord.word?.toLowerCase().split('').join('-') || ''}]
+                            {currentWord.part_of_speech || 'noun'} [{currentWord.pronunciation || currentWord.word}]
                         </div>
 
                         {/* Meaning */}
@@ -300,7 +320,7 @@ export default function Home() {
                         </div>
 
                         {/* Example sentence */}
-                        <p className="text-[18px] leading-[21px] text-primary font-roboto font-light">"This word "<span className="underline">{currentWord.word?.toLowerCase() || '...'}</span>" is English Language"</p>
+                        <p className="text-[18px] leading-[21px] text-primary font-roboto font-light">"{currentWord.example_sentence || `Use the word "${currentWord.word}" in a sentence.`}"</p>
                     </div>
                 </div>
 

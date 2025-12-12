@@ -19,6 +19,9 @@ class Word(Base):
         SQLEnum('Beginner', 'Intermediate', 'Advanced', name='difficulty'),
         default='Beginner'
     )
+    part_of_speech = Column(String(50))
+    pronunciation = Column(String(100))
+    example_sentence = Column(Text)
     created_at = Column(TIMESTAMP, default=get_thailand_time)
 
 
