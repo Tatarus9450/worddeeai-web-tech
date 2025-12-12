@@ -1,5 +1,5 @@
 version: "2"
-authtoken: XXXXXXXXXXXXXXX
+authtoken: 2Nh5iEttZo6T5FEoxJuTK72rAKe_M7EWHSSzwh7V7RfQX9uM
 tunnels:
   frontend:
     addr: 3000
