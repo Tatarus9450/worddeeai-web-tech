@@ -109,39 +109,6 @@ cd daily_vocab_api && docker compose down
 5. Activate workflow
 
 ---
-
-## 🌐 Ngrok Setup (External Access)
-
-เพื่อให้คนอื่นเข้าใช้งานจากภายนอกได้ ต้อง forward ทั้ง Frontend (3000) และ Backend (8000)
-
-### 1. ติดตั้ง Ngrok
-```bash
-# Ubuntu/Debian
-snap install ngrok
-
-# หรือดาวน์โหลดจาก https://ngrok.com/download
-```
-
-### 2. เชื่อมต่อ Ngrok Account (ครั้งแรก)
-```bash
-ngrok config add-authtoken YOUR_AUTH_TOKEN
-```
-> ดู authtoken ได้ที่ https://dashboard.ngrok.com/get-started/your-authtoken
-
-### 3. รัน Ngrok (2 Ports พร้อมกัน)
-```bash
-ngrok start --all --config ngrok.yml
-```
-
-### 4. แชร์ URL ให้เพื่อน
-Ngrok จะแสดง 2 URLs:
-- **Frontend**: `https://xxxx.ngrok-free.app` (port 3000)
-- **Backend API**: `https://yyyy.ngrok-free.app` (port 8000)
-
-> ⚠️ **หมายเหตุ**: ผู้ใช้ภายนอกต้องใช้ทั้ง 2 URLs - Frontend สำหรับเข้าเว็บ และ Backend สำหรับ API
-
----
-
 ## 📁 Project Structure
 
 ```
@@ -153,12 +120,10 @@ web-tech/
 │   └── n8n-workflow.json     # n8n Workflow Template
 │
 ├── daily_vocab_web/          # Frontend
-│   └── src/
-│       ├── app/              # Next.js Pages
-│       │   ├── word-of-the-day/
-│       │   └── dashboard/
-│       └── components/       # React Components
-│
-└── ngrok.yml                 # Ngrok Config File
+   └── src/
+       ├── app/              # Next.js Pages
+       │   ├── word-of-the-day/
+       │   └── dashboard/
+       └── components/       # React Components
 ```
 
