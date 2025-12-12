@@ -167,7 +167,7 @@ export default function Dashboard() {
                   {isLoading ? '-' : stats.time_display}
                 </span>
               </div>
-              <p className="text-[20px] leading-[23px] font-light text-black/80 font-roboto">Time learned</p>
+              <p className="text-[20px] leading-[23px] font-light text-black/80 font-roboto">[Hours / Minutes] learned</p>
             </div>
           </div>
         </div>
