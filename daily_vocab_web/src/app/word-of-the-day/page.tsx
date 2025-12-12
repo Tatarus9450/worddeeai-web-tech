@@ -228,7 +228,7 @@ export default function Home() {
                         {/* Suggestion box */}
                         <div className="w-full rounded-[10px] bg-[#E7FFDE] shadow-[0px_1px_9.1px_-3px_rgba(0,0,0,0.16)] p-4 flex flex-col gap-2 border-l-4 border-[#B2E362]">
                             <p className="text-[16px] leading-[19px] font-bold text-primary font-roboto">
-                                คำแนะนำจาก AI:
+                                Suggestion:
                             </p>
                             <p className="text-[16px] leading-[19px] font-light italic text-primary font-roboto">
                                 {feedbackMessage || "ยอดเยี่ยม! ประโยคของคุณแสดงความเข้าใจคำศัพท์ได้ดีมาก"}
@@ -310,17 +310,25 @@ export default function Home() {
 
                         {/* Part of speech and pronunciation */}
                         <div className="text-[18px] leading-[21px] text-primary font-roboto font-light italic">
-                            {currentWord.part_of_speech || 'noun'} [{currentWord.pronunciation || currentWord.word}]
+                            {currentWord.part_of_speech || 'noun'} {currentWord.pronunciation || currentWord.word}
                         </div>
 
                         {/* Meaning */}
                         <div className="text-[18px] leading-[21px] text-primary font-roboto">
                             <span className="font-bold">Meaning: </span>
-                            <span className="font-bold">{currentWord.definition}</span>
+                            <span className="text-[18px] leading-[21px] text-primary font-roboto font-light italic">{currentWord.definition}</span>
                         </div>
 
                         {/* Example sentence */}
-                        <p className="text-[18px] leading-[21px] text-primary font-roboto font-light">"{currentWord.example_sentence || `Use the word "${currentWord.word}" in a sentence.`}"</p>
+                        <p className="text-[18px] leading-[21px] text-primary font-roboto font-light">
+                            "{currentWord.example_sentence ? (
+                                currentWord.example_sentence.split(new RegExp(`(${currentWord.word})`, 'gi')).map((part, index) =>
+                                    part.toLowerCase() === currentWord.word.toLowerCase() ?
+                                        <span key={index} className="underline">{part}</span> :
+                                        part
+                                )
+                            ) : `Use the word "${currentWord.word}" in a sentence.`}"
+                        </p>
                     </div>
                 </div>
 

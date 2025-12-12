@@ -25,14 +25,14 @@ export default function Header() {
                     <nav className="hidden gap-8 md:flex">
                         <Link
                             href="/dashboard"
-                            className={`text-[20px] leading-[23px] font-roboto font-light transition-colors ${pathname === '/dashboard' ? 'text-primary font-normal underline decoration-2 underline-offset-4 decoration-primary' : 'text-nav hover:text-primary'
+                            className={`text-[20px] leading-[23px] font-roboto font-light transition-colors ${pathname === '/dashboard' ? 'text-[#5BA4A4] font-medium underline decoration-2 underline-offset-4 decoration-[#5BA4A4]' : 'text-[#5BA4A4] hover:text-[#4A8A8A]'
                                 }`}
                         >
                             My Progress
                         </Link>
                         <Link
                             href="/word-of-the-day"
-                            className={`text-[20px] leading-[23px] font-roboto font-light transition-colors ${pathname === '/word-of-the-day' || pathname === '/' ? 'text-primary font-normal underline decoration-2 underline-offset-4 decoration-primary' : 'text-nav hover:text-primary'
+                            className={`text-[20px] leading-[23px] font-roboto font-light transition-colors ${pathname === '/word-of-the-day' || pathname === '/' ? 'text-[#5BA4A4] font-medium underline decoration-2 underline-offset-4 decoration-[#5BA4A4]' : 'text-[#5BA4A4] hover:text-[#4A8A8A]'
                                 }`}
                         >
                             Word of the Day

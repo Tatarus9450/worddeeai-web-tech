@@ -97,7 +97,7 @@ export default function Dashboard() {
       >
         {/* Page Header */}
         <h1 className="text-[40px] leading-[50px] font-bold text-primary font-merriweather">
-          My Progress
+          &lt;name&gt;'s learner Dashboard
         </h1>
 
         {/* Section: Your missions today */}
