@@ -1,4 +1,5 @@
 version: "2"
+authtoken: XXXXXXXXXXXXXXX
 tunnels:
   frontend:
     addr: 3000
