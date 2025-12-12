@@ -177,3 +177,15 @@ INSERT INTO words (word, definition, difficulty_level, part_of_speech, pronuncia
 ('Insidious', 'Proceeding harmfully in a subtle way', 'Advanced', 'Adjective', '[in-sid-i-ous]', 'The disease has an insidious onset.'),
 ('Meticulous', 'Showing great attention to detail', 'Advanced', 'Adjective', '[me-tic-u-lous]', 'She is meticulous in her work.'),
 ('Serendipity', 'Finding good things by chance', 'Advanced', 'Noun', '[ser-en-dip-i-ty]', 'Meeting her was pure serendipity.');
+
+INSERT INTO practice_sessions (id, word_id, user_sentence, score, feedback, corrected_sentence, practiced_at) VALUES
+(1, 4, 'I went to the library late at night.', 8.5, 'Excellent sentence! Clear context.', 'I went to the library late at night.', '2025-12-12 01:30:00'),
+(2, 8, 'Finding this open shop was serendipity.', 9.0, 'Perfect usage!', 'Finding this open shop was serendipity.', '2025-12-12 03:15:00'),
+(3, 1, 'I eat an apple every morning.', 7.5, 'Good, but simple.', 'I eat a fresh apple every morning.', '2025-12-11 09:00:00'),
+(4, 6, 'It takes courage to speak up.', 8.0, 'Good structure.', 'It takes courage to speak up.', '2025-12-11 11:20:00'),
+(5, 2, 'He is ambitious about his job.', 8.5, 'Accurate.', 'He is very ambitious about his new job.', '2025-12-11 16:45:00'),
+(6, 5, 'We collaborate on the project.', 8.0, 'Correct usage.', 'We collaborate closely on the project.', '2025-12-10 13:00:00'),
+(7, 3, 'Perseverance leads to success.', 9.0, 'Inspiring.', 'Perseverance usually leads to success.', '2025-12-10 15:30:00'),
+(8, 8, 'It was pure serendipity.', 7.0, 'Grammatically correct.', 'It was pure serendipity that we met.', '2025-12-09 10:00:00'),
+(9, 4, 'The library is quiet.', 6.0, 'A bit short.', 'The local library is always quiet.', '2025-12-09 18:00:00'),
+(10, 7, 'Swatdeekub.', 10.0, 'Nice Thai greeting.', 'Swatdeekub.', '2025-12-07 08:30:00');
