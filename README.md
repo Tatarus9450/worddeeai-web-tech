@@ -152,3 +152,13 @@ web-tech/
 
 ## ⭐ Dashboard page
 ![Dashboard Preview](images/dashboard.png)
+
+---
+
+### 👥 Team Members
+| Student ID  | Name                      | GitHub                          |
+|:-----------:|:-------------------------:|:--------------------------------:|
+| 1660903640  | Ms. Lalitawadee Wongkhun       | [miyomui](https://github.com/miyomui)      |
+| 1660904226  | Ms. Jeeranan Sena             | [Granxn](https://github.com/Granxn)       |
+| 1660900463  | Mr. Talu Khulapwan  | [Tatarus9450](https://github.com/Tatarus9450/)      |
+| 1660904184  | Ms. Ariya Raveewongpiboon  | [Ploy-ari](https://github.com/Ploy-ari)      |
