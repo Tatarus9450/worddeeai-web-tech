@@ -6,7 +6,6 @@
 ```bash
 cd daily_vocab_api
 docker compose up -d
-cd ..
 ```
 > Services: API (`8000`), MySQL (`3307`), n8n (`5678`)
 
@@ -67,7 +66,7 @@ mysql -h 127.0.0.1 -P 3307 -u vocabuser -pvocabpass123 vocabulary_db
 ### Backend (`daily_vocab_api`)
 - **Framework**: Python (FastAPI)
 - **Database**: MySQL 8.0
-- **AI Integration**: n8n + Google Gemini API
+- **AI Integration**: n8n + Google Gemini API (สามารถใช้ OpenAI API แทนได้)
 - **Container**: Docker Compose
 
 ### Frontend (`daily_vocab_web`)
