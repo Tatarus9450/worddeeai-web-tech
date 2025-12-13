@@ -25,6 +25,18 @@ npm run dev
   <img src="images/diagram.png" alt="Data Pipeline Flow" width="350">
 </div>
 
+ --- 
+
+### 🐣 Workflow n8n
+
+<div align="center">
+  <img src="images/n8n.png" alt="Data Pipeline Flow" width="600">
+</div>
+
+###  วิธีการ Setup Workflow ของ n8n
+- ทำการ Import file "daily_vocab_api\n8n-workflow.json" เข้าไปใน n8n
+- ทำการตั้งค่าใส่ API KEY จาก Gemini หรือ Open AI
+- ทำการกด Save และ Activate Workflow เพื่อใช้งาน
 ---
 
 ## 🔗 Services
