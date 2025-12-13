@@ -19,6 +19,14 @@ npm run dev
 
 ---
 
+### 📙 Workflow Diagram
+
+<div align="center">
+  <img src="images/diagram.png" alt="Data Pipeline Flow" width="350">
+</div>
+
+---
+
 ## 🔗 Services
 
 | Service | URL | Description |
