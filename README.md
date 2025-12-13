@@ -10,7 +10,7 @@ cd ..
 ```
 > Services: API (`8000`), MySQL (`3307`), n8n (`5678`)
 
-### 2. Start Frontend
+### 2. Start Frontend✨
 ```bash
 cd daily_vocab_web
 npm install
