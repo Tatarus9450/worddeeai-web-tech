@@ -125,4 +125,10 @@ web-tech/
        │   └── dashboard/
        └── components/       # React Components
 ```
+--- 
 
+## 💗 Word of the day page
+![Dashboard Preview](images/word.png)
+
+## ⭐ Dashboard page
+![Dashboard Preview](images/dashboard.png)
